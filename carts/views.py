@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from store.models import Product
 from .models import Cart, CartItem
@@ -64,7 +65,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
 
         tax = (2 * total)/100
         grand_total = total + tax
-    except Cart.ObjectNotExist:
+    except ObjectDoesNotExist:
         pass
 
     context = {
