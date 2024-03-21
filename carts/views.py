@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
 
 from store.models import Product, Variation
 from .models import Cart, CartItem
