@@ -6,6 +6,7 @@ from django.db.models import Q
 from category.models import Category
 from carts.models import CartItem
 from carts.views import _cart_id
+from orders.models import OrderProduct
 from .models import Product, ReviewRating
 from .forms import ReviewForm
 
@@ -46,9 +47,17 @@ def product_detail(request, category_slug, product_slug):
     except Exception as e:
         raise e
 
+    try:
+        order_product = OrderProduct.objects.filter(
+            user=request.user,
+            product_id=single_product.id).exists()
+    except OrderProduct.DoesNotExist:
+        order_product = None
+
     context = {
         "single_product": single_product,
-        "in_cart": in_cart
+        "in_cart": in_cart,
+        "order_product": order_product
     }
 
     return render(request, "store/product-detail.html", context=context)
